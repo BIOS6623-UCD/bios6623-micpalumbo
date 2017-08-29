@@ -14,3 +14,5 @@ I right clicked on the readme.md file that I saw in GitKraken and then chose ope
 
 I don't know if this is a general readme file for our entire repository and all the work we do in this class. It seems like we should have a readme file for each project we work on. Not sure if that is something that we will create or that we need to create on our own so I will ask that in class on Wednesday. 
 
+I save my changes in Rmarkdown and then see that the readme is in the unstaged section. So I staged it then added a summary of my changes and then pressed commit. Then I pressed the push button to push my changes to github.
+
