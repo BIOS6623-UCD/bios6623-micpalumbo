@@ -52,7 +52,6 @@ range(dat$pd1year, na.rm = TRUE)
 hist(dat$pd1year)
 
 ## EXAMINING CATEGORICAL VARIABLES
-dat$trtgroup <- as.factor(dat$trtgroup)
 
 # treatment group
 dat$trtgroup <- factor(dat$trtgroup, levels = c(1, 2, 3, 4, 5),
@@ -84,3 +83,15 @@ dat$smoker <- factor(dat$smoker, levels = c(0, 1), labels = c("no", "yes"))
 summary(dat$smoker)
 attributes(dat$smoker)
 table(dat$smoker)
+
+# CREATING DIFFERENCE VARIABLES
+dat$attachdiff <- dat$attach1year - dat$attachbase
+
+dat$pddiff <- dat$pd1year - dat$pdbase
+
+# SEE IF THERE IS A PATTERN TO THE DROPOUT
+dropout.rows <- which(is.na(dat$pd1year)) # gives the row numbers for the people that dropped out at 1year
+
+
+#try using ggplot for graphs
+
