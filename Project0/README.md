@@ -1,3 +1,6 @@
+Project 0 README
+
+I'm leaving the project information here for future reference. 
 Here is an example project readme file.  You should modify this for your project and do this for every project over the term.  This project contains the analysis and report files for project 0 for the Bios 6623 class.  
 Data are kept out of this directory.  If you are interested in working on the project and
 do not have the data, please write nichole.carlson@ucdenver.edu and I can provide a copy
@@ -28,3 +31,8 @@ to get the average outcome measurement.  Missing values are denoted by an â€œNAâ
 
 **The primary question of interest is whether treatment results in lower average 
 pocket depth and attachment loss at one year.**  
+
+Proj0descriptives.R:
+This file imports the data and contains some code for data checking and for descriptive statistics. 
+Upon initial examination it appears that 27 subjects were lost to followup and didn't show up for measurements at the 1 year mark because there are 27 NAs for both attach1year and pd1year.
+
