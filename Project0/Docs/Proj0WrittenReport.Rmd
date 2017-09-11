@@ -1,0 +1,49 @@
+---
+title: "Proj0WrittenReport"
+author: "Michaela Palumbo"
+date: "September 11, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+Outline  - should total 4-6 pages double spaced 
+
+Introduction: Briefly describe project including data received by investigator and scientific hypothesis of interest. Rephrase scientific hypothesis of interest into testable statistical hypothesis. (~1/2 page)
+Give info pertinent to data analysis – not general biology background
+
+Methods: Describe methods used to clean and analyze the data. Justify and explain analysis approach ( ~2 pages). Written in past tense. Do not include results or equataions
+
+look at group sizes and demographics (mean age, etc. for each treatment group)
+
+Results: Present Results for analyses described in methods (~1 – 1.5 pages)  Use tables and figures as appropriate. Include in text the full interpretation of the statistical results for the main findings (point estimates, confidence bounds, p-values, interpretation of results of test)
+Tables and figures don’t count towards page limit and should be limited to a total of 6
+
+Conclusions: (~0.5 – 1 page) interpret results in context of scientific questions. Discuss any limitations to your analysis that may affect your interpretation or that require additional consideration by investigator
+
+talk about missing data and the missingness primarily in group 5 – leading to smaller sample size  and missingness wasn’t address, why did missing occur? likely not random?
+
+Reproducible research information
+
