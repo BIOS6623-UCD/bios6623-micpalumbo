@@ -36,3 +36,12 @@ Proj0descriptives.R:
 This file imports the data and contains some code for data checking and for descriptive statistics. 
 Upon initial examination it appears that 27 subjects were lost to followup and didn't show up for measurements at the 1 year mark because there are 27 NAs for both attach1year and pd1year.
 
+Proj0modelspd:
+Fitting different models for pocket depth
+Models included: Only diffpd and treatment group, using baseline as covariate, inclusion of other covariates.
+Looked at AICs and residual plots of models to determine which model best fits the data
+
+Proj0modelsat:
+Fitting different models for attachment
+Models included: Only diffat and treatment group, using baseline as covariate, inclusion or exclusion of other covariates.
+Looked at AICs and residual plots of models to determine which model best fits the data

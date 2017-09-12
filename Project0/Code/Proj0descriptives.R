@@ -85,7 +85,7 @@ attributes(dat$smoker)
 table(dat$smoker)
 
 # CREATING DIFFERENCE VARIABLES
-dat$attachdiff <- dat$attach1year - dat$attachbase
+dat$atdiff <- dat$attach1year - dat$attachbase
 
 dat$pddiff <- dat$pd1year - dat$pdbase
 
@@ -94,4 +94,7 @@ dropout.rows <- which(is.na(dat$pd1year)) # gives the row numbers for the people
 
 
 #try using ggplot for graphs
+#boxplots
+#scatter plots of outcomes vs covariates
+#create a table 1
 

@@ -37,6 +37,9 @@ Give info pertinent to data analysis – not general biology background
 Methods: Describe methods used to clean and analyze the data. Justify and explain analysis approach ( ~2 pages). Written in past tense. Do not include results or equataions
 
 look at group sizes and demographics (mean age, etc. for each treatment group)
+model selection process with AIC to decide inclusion of covariates or baseline as predictor
+also looking at the residuals
+
 
 Results: Present Results for analyses described in methods (~1 – 1.5 pages)  Use tables and figures as appropriate. Include in text the full interpretation of the statistical results for the main findings (point estimates, confidence bounds, p-values, interpretation of results of test)
 Tables and figures don’t count towards page limit and should be limited to a total of 6
