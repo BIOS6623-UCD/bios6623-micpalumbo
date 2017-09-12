@@ -91,10 +91,14 @@ dat$pddiff <- dat$pd1year - dat$pdbase
 
 # SEE IF THERE IS A PATTERN TO THE DROPOUT
 dropout.rows <- which(is.na(dat$pd1year)) # gives the row numbers for the people that dropped out at 1year
+dat.dropout <- dat[dropout.rows, ]
+table(dat.dropout$trtgroup)
+#useful plot showing trend of dropout across treatment groups
+plot(dat.dropout$trtgroup, xlab = "treatment group", ylab = "# subjects missing at 1 year",
+     main = "Trend in Participant Dropout Across Groups") 
 
 
-#try using ggplot for graphs
-#boxplots
-#scatter plots of outcomes vs covariates
-#create a table 1
+
+
+
 
