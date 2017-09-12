@@ -98,7 +98,10 @@ plot(dat.dropout$trtgroup, xlab = "treatment group", ylab = "# subjects missing 
      main = "Trend in Participant Dropout Across Groups") 
 
 
-
-
+# Examine trends across groups
+aggregate(pddiff ~ trtgroup, dat, mean)
+aggregate(pddiff ~ trtgroup, dat, sd)
+aggregate(atdiff ~ trtgroup, dat, mean)
+aggregate(atdiff ~ trtgroup, dat, sd)
 
 

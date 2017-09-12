@@ -25,6 +25,10 @@ Fitting different models for attachment
 Models included: Only diffat and treatment group, using baseline as covariate, inclusion or exclusion of other covariates.
 Looked at AICs and residual plots of models to determine which model best fits the data
 
+Proj0modelsfinal.R:
+Includes the final model I chose based on AIC and residual plots for each outcome (change in attachment and change in pocket depth). 
+Includes summary of models to get paramter estimates and results
+
 Docs Folder:
 Project 0 Overview.docx:
 Includes notes about the project that I took in class while talking with the investigator
