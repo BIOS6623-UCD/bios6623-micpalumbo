@@ -36,3 +36,10 @@ Includes notes about the project that I took in class while talking with the inv
 Proj0Description.txt:
 Describes the overview of the project, variables, data, and how it was collected. Also has the primary question of interest.
 
+Reports Folder:
+Proj0WrittenReport.Rmd:
+This is my final write up and report for the project
+
+Proj0Slides.pptx
+These are the powerpoint slides for my final presentation for this project
+

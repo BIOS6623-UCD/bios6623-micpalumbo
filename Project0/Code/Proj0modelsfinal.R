@@ -17,3 +17,6 @@ summary(atfinal)
 plot(atfinal$residuals ~ atfinal$fitted.values, pch = 20, main = "Attachment: Residuals vs Fitted Values")
 qqnorm(scale(atfinal$residuals), pch = 20, main = "Attachment: Normal Q-Q Plot of Residuals")
 abline(0, 1, col = "red")
+
+confint(atfinal, level = 0.95)
+

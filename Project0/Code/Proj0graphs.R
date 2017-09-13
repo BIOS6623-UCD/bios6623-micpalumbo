@@ -18,20 +18,31 @@ plot(dat$age ~ dat$trtgroup, xlab = "treatment group", ylab = "age",
 plot(dat$sites ~ dat$trtgroup, xlab = "treatment group", ylab = "# sites measured",
      main = "Sites Across Treatment Group")
 
-# race (crosstab)
+install.packages('gmodels')
+library(gmodels)
 
+# race (crosstab)
+CrossTable(dat$trtgroup, dat$race, prop.chisq = FALSE, prop.t = FALSE)
+table(dat$trtgroup, dat$race)
+table(dat.nomissing$trtgroup, dat.nomissing$race)
 
 # sex (crosstab)
+table(dat$trtgroup, dat$sex)
+table(dat.nomissing$trtgroup, dat.nomissing$sex) 
+#note the difference in frequency between males and females for certain treatment groups is worse after 
+#dropout - especially: controls, med, and high
 
 # smoking status (crosstab)
+table(dat$trtgroup, dat$smoker)
+table(dat.nomissing$trtgroup, dat.nomissing$smoker)
 
 # difference in pocket depth (boxplots)
-plot(dat$pddiff ~ dat$trtgroup, xlab = "treatment group", ylab = "Change in pocket depth",
-     main = "Change in Pocket Depth Across Treatment Group")
+plot(dat.nomissing$pddiff ~ dat.nomissing$trtgroup, xlab = "treatment group", 
+     ylab = "Change in pocket depth", main = "Change in Pocket Depth Across Treatment Group")
 
 # difference in attachment (boxplots)
-plot(dat$atdiff ~ dat$trtgroup, xlab = "treatment group", ylab = "Change in attachment",
-     main = "Change in Attachment Across Treatment Group")
+plot(dat.nomissing$atdiff ~ dat.nomissing$trtgroup, xlab = "treatment group", 
+     ylab = "Change in attachment", main = "Change in Attachment Across Treatment Group")
 
 ## PLOTS OF COVARIATES vs DIFFERENCE IN POCKET DEPTH
 ## want to check for assumptions of relationship between covariates with outcome
@@ -68,4 +79,8 @@ plot(dat$atdiff ~ dat$sex, xlab = "sex", ylab = "change in attachment")
 #smoking status
 plot(dat$atdiff ~ dat$smoker, xlab = "smoker?", ylab = "change in attachment")
 
-
+install.packages("tableone")
+library(tableone)
+t1vars <- c("age", "sex", "race", "smoker", "sites", "attachbase", "atdiff", "pdbase", "pddiff")
+tbl <- CreateTableOne(t1vars, strata = "trtgroup", data = dat.nomissing, test = FALSE)
+print(tbl)

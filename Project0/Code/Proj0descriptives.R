@@ -60,6 +60,7 @@ summary(dat$trtgroup)
 str(dat$trtgroup)
 attributes(dat$trtgroup)
 table(dat$trtgroup)
+dat$trtgroup <- relevel(dat$trtgroup, ref = 2) #re-leveling so control is reference instead of placebo
 
 # sex
 dat$sex <- factor(dat$sex, levels = c(1, 2), labels = c("male", "female"))
@@ -96,6 +97,9 @@ table(dat.dropout$trtgroup)
 #useful plot showing trend of dropout across treatment groups
 plot(dat.dropout$trtgroup, xlab = "treatment group", ylab = "# subjects missing at 1 year",
      main = "Trend in Participant Dropout Across Groups") 
+
+#DATA WITH 27 dropouts removed
+dat.nomissing <- dat[!is.na(dat$pd1year), ] #only 103 variables, lm drops these automatically
 
 
 # Examine trends across groups
