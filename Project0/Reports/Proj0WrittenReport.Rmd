@@ -39,6 +39,8 @@ The data was stored in the following location: "C:/Users/Michaela Palumbo/Docume
 dat <- read.csv("~/Documents/CU AMC Fall 2017/BIOS6623/Project0_dental_data.csv")
 ```
 
+\pagebreak
+
 ## Appendix
 ```{r include=FALSE}
 dat$trtgroup <- factor(dat$trtgroup, levels = c(1, 2, 3, 4, 5),
