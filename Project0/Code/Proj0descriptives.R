@@ -96,7 +96,8 @@ dat.dropout <- dat[dropout.rows, ]
 table(dat.dropout$trtgroup)
 #useful plot showing trend of dropout across treatment groups
 plot(dat.dropout$trtgroup, xlab = "treatment group", ylab = "# subjects missing at 1 year",
-     main = "Trend in Participant Dropout Across Groups") 
+     main = "Trend in Participant Dropout Across Groups", 
+     col = c("green", "blue", "red", "red", "red"))
 
 #DATA WITH 27 dropouts removed
 dat.nomissing <- dat[!is.na(dat$pd1year), ] #only 103 variables, lm drops these automatically

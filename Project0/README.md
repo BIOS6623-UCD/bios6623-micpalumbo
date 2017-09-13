@@ -37,9 +37,18 @@ Proj0Description.txt:
 Describes the overview of the project, variables, data, and how it was collected. Also has the primary question of interest.
 
 Reports Folder:
-Proj0WrittenReport.Rmd:
-This is my final write up and report for the project
+Proj0WrittenReport.Rmd/Proj0WrittenReport.pdf:
+This is my final write up and report for the project. I wrote it in an Rmd file that I knitted to a pdf.
 
 Proj0Slides.pptx
 These are the powerpoint slides for my final presentation for this project
+
+Proj0dropout.png
+Image of graph of dropout trends to put in slides
+
+Proj0dropoutcolors.png
+Image of graph of dropout trends to put in slides with colorful bars
+
+Proj0Tab1.csv
+Saving the Table1 contents as a dataset xcel file
 
