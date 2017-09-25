@@ -6,7 +6,7 @@ THIS IS A LONG DESCRIPTION.  READ UNTIL THE END!
 
 Data Overview: This project is a secondary data analysis of the Multicenter AIDS Cohort Study, an ongoing prospective cohort study of the natural and treated histories of HIV-1 infection in homosexual and bisexual men in 4 major cities in the United States. 
 
- Highly active antiretroviral treatment (HAART) is the standard treatment for HIV infected patients.  Our dataset includes up to 8 years of longitudinal laboratory and quality of life measures, as well as demographic and other health information, on HIV infected men after beginning HAART.  The subjects were seen annually.  Year 0 data are from the subjects’ last untreated visit, just before beginning HAART.  All other visits (year 1 up to 8) are on treatment.  
+Highly active antiretroviral treatment (HAART) is the standard treatment for HIV infected patients.  Our dataset includes up to 8 years of longitudinal laboratory and quality of life measures, as well as demographic and other health information, on HIV infected men after beginning HAART.  The subjects were seen annually.  Year 0 data are from the subjects’ last untreated visit, just before beginning HAART.  All other visits (year 1 up to 8) are on treatment.  
 
 Question of Interest: We are interested in understanding how treatment response 2 years after initiating HAART differs between subjects who report using hard drugs, such as heroine and cocaine, at baseline and other subjects, who did not report hard drug use at baseline.   
 
