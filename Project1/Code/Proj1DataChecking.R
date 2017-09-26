@@ -35,7 +35,10 @@ dat.02wide <- reshape(data = dat.02, idvar = "newid", timevar = "years", directi
 head(dat.02wide)
 summary(dat.02wide)
 dropvars <- names(dat.02wide) %in% c("income.2", "DKGRP.2", "age.2", "BMI.2", "RACE.2", "SMOKE.2", 
-              "EDUCBAS.2", "ADH.0")
+              "EDUCBAS.2", "ADH.0", "HASHV.2", "HASHF.2", "HBP.2", "DIAB.2", "LIV34.2", "KID.2",
+              "FRP.2", "FP.2", "TCHOL.2", "TRIG.2", "LDL.2", "DYSLIP.2", "CESD.2", "HEROPIATE.2",
+              "IDU.2", "hivpos.2", "ART.2", "everART.2", "hard_drugs.2", "hivpos.0", "ART.0",
+              "everART.0")
 
 dat.02wide2 <- dat.02wide[!dropvars] # dropping variables not needed
 summary(dat.02wide2)
