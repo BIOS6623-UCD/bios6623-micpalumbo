@@ -4,7 +4,7 @@
 ### Graphs
 ##########################
 
-#useful plot showing trend of dropout across treatment groups
+# useful plot showing trend of dropout across treatment groups
 plot(dat.dropout$trtgroup, xlab = "treatment group", ylab = "# subjects missing at 1 year",
      main = "Trend in Participant Dropout Across Groups") 
 

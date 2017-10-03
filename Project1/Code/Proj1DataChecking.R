@@ -38,7 +38,8 @@ dropvars <- names(dat.02wide) %in% c("income.2", "DKGRP.2", "age.2", "BMI.2", "R
               "EDUCBAS.2", "ADH.0", "HASHV.2", "HASHF.2", "HBP.2", "DIAB.2", "LIV34.2", "KID.2",
               "FRP.2", "FP.2", "TCHOL.2", "TRIG.2", "LDL.2", "DYSLIP.2", "CESD.2", "HEROPIATE.2",
               "IDU.2", "hivpos.2", "ART.2", "everART.2", "hard_drugs.2", "hivpos.0", "ART.0",
-              "everART.0")
+              "everART.0", "IDU.0", "HEROPIATE.0", "CESD.0", "HBP.0", "DIAB.0", "LIV34.0",
+              "KID.0", "FRP.0", "FP.0", "TCHOL.0", "TRIG.0", "LDL.0", "DYSLIP.0", "CESD.0")
 
 dat.02wide2 <- dat.02wide[!dropvars] # dropping variables not needed
 summary(dat.02wide2)
@@ -56,30 +57,11 @@ summary(dat.02wide2)
 dat.02wide2$BMI.0[dat.02wide2$BMI.0 == 999] <- NA
 dat.02wide2$BMI.0[dat.02wide2$BMI.0 == -1] <- NA
 dat.02wide2$income.0[dat.02wide2$income.0 == 9] <- NA
-dat.02wide2$HBP.0[dat.02wide2$HBP.0 == 9] <- NA
-dat.02wide2$HBP.0[dat.02wide2$HBP.0 == -1] <- NA
-dat.02wide2$HBP.2[dat.02wide2$HBP.2 == 9] <- NA
-dat.02wide2$HBP.2[dat.02wide2$HBP.2 == -1] <- NA
-dat.02wide2$DIAB.0[dat.02wide2$DIAB.0 == 9] <- NA
-dat.02wide2$DIAB.2[dat.02wide2$DIAB.2 == 9] <- NA
-dat.02wide2$LIV34.0[dat.02wide2$LIV34.0 == 9] <- NA
-dat.02wide2$LIV34.2[dat.02wide2$LIV34.2 == 9] <- NA
-dat.02wide2$KID.0[dat.02wide2$KID.0 == 9] <- NA
-dat.02wide2$KID.2[dat.02wide2$KID.2 == 9] <- NA
-dat.02wide2$FRP.0[dat.02wide2$FRP.0 == 9] <- NA
-dat.02wide2$FRP.2[dat.02wide2$FRP.2 == 9] <- NA
-dat.02wide2$FP.0[dat.02wide2$FP.0 == 9] <- NA
-dat.02wide2$FP.2[dat.02wide2$FP.2 == 9] <- NA
-dat.02wide2$DYSLIP.0[dat.02wide2$DYSLIP.0 == 9] <- NA
-dat.02wide2$DYSLIP.2[dat.02wide2$DYSLIP.2 == 9] <- NA
-dat.02wide2$CESD.0[dat.02wide2$CESD.0 == -1] <- NA
-dat.02wide2$CESD.2[dat.02wide2$CESD.2 == -1] <- NA
-dat.02wide2$HEROPIATE.0[dat.02wide2$HEROPIATE.0 == -9] <- NA
-dat.02wide2$HEROPIATE.2[dat.02wide2$HEROPIATE.2 == -9] <- NA
-summary(dat.02wide2)
 
-# check for levels of categorical variables
-# variables with yes and no and yes/no based on trajectory
+# check for potential outliers or impossible values
+dat.02wide2$BMI.0[dat.02wide2$BMI.0 > 100] <- NA
+
+## recategorize category variables to investigator's preference
 
 # race (NHW (1) vs other (2))
 dat.02wide2$RACE.0[dat.02wide2$RACE.0 > 1] <- 2 
@@ -104,14 +86,34 @@ dat.02wide2$EDUCBAS.0[dat.02wide2$EDUCBAS.0 > 3] <- 2 # > HS
 dat.02wide2$ADH.2[dat.02wide2$ADH.2 < 3] <- 1 # >= 95%
 dat.02wide2$ADH.2[dat.02wide2$ADH.2 > 2] <- 2 # < 95%
 
+summary(dat.02wide2)
+
+# Remove people with any missing data
+dat.wide.nomissing <- dat.02wide2[complete.cases(dat.02wide2), ]
+summary(dat.wide.nomissing)
+
+# keep a copy of the dataset that is all numerical (potentially easier to load in SAS)
+dat.wide.nomissing.num <- dat.wide.nomissing
+
 # make categorical variables factors
+dat.wide.nomissing$HASHV.0 <- factor(dat.wide.nomissing$HASHV.0)
+dat.wide.nomissing$HASHF.0 <- factor(dat.wide.nomissing$HASHF.0)
+dat.wide.nomissing$income.0 <- factor(dat.wide.nomissing$income.0)
+dat.wide.nomissing$SMOKE.0 <- factor(dat.wide.nomissing$SMOKE.0)
+dat.wide.nomissing$DKGRP.0 <- factor(dat.wide.nomissing$DKGRP.0)
+dat.wide.nomissing$RACE.0 <- factor(dat.wide.nomissing$RACE.0)
+dat.wide.nomissing$EDUCBAS.0 <- factor(dat.wide.nomissing$EDUCBAS.0)
+dat.wide.nomissing$hard_drugs.0 <-factor(dat.wide.nomissing$hard_drugs.0)
+dat.wide.nomissing$ADH.2 <- factor(dat.wide.nomissing$ADH.2)
 
+summary(dat.wide.nomissing)
 
-# check for potential outliers or impossible values
-dat.02wide2$BMI.0[dat.02wide2$BMI.0 > 100] <- NA
-
-# don't include in analysis of outcome if have missing value for that outcome
+# log transform viral load because investigator said log viral load is clinically meaningful
+dat.wide.nomissing$log10vload.0 <- log10(dat.wide.nomissing$VLOAD.0)
+dat.wide.nomissing$log10vload.2 <- log10(dat.wide.nomissing$VLOAD.2)
 
 # create difference variables
-
-# check assumptions of covariates with the outcome
+dat.wide.nomissing$log10vloaddiff <- dat.wide.nomissing$log10vload.2 - dat.wide.nomissing$log10vload.0
+dat.wide.nomissing$AGGMENTdiff <- dat.wide.nomissing$AGG_MENT.2 - dat.wide.nomissing$AGG_MENT.0
+dat.wide.nomissing$AGGPHYSdiff <- dat.wide.nomissing$AGG_PHYS.2 - dat.wide.nomissing$AGG_PHYS.0
+dat.wide.nomissing$LEU3Ndiff <- dat.wide.nomissing$LEU3N.2 - dat.wide.nomissing$LEU3N.0
