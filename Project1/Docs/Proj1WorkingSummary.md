@@ -35,7 +35,12 @@ not much difference in marijuana use between those who were and were not adheren
 
 
 Examining correlation between all variables 
+Creating table 1 stratified by hard drug use
 
-Start running models and model selection process
+10/3/17: Created indicator variables and finalized clean dataset that I wrote as a CSV to upload to SAS to use for the proc MCMC models. Ran 8 initial proc MCMC models - 2 for each outcome. 
+Had to create indicator (0/1) variables for the categorical covariates because proc mcmc doesn't have a class statement. One crude that only included outcome intercept and hard drug use. One full that includes crude plus all covariates listed as of interest to investigator. Will begin by adjusting models so that we get convergence and nice plots before we begin to compare DIC and do any further model selection and removal of covariates. At first glance at DIC and plots for the first round of 8 models I fit, it seems that for each outcome DIC was lower for the full model. However, as I have the models set up and proc mcmc settings the convergence and plots looked good for crude models for all outcoomes but looked terrible for full models for all outcomes. Will need to figure out what I need to adjust to improve my diagnostic plots. 
+Questions I have/things to ask in class on 10/5:
+With the 0/1 variables will SAS use 0 as the reference? Did I properly code my indicators for income and how will these beta coefficients be interpreted?
+Do the crude and full models have to have the same nbi and nmc as the full models to be able to compare them?
+Verify what should be included in the crude model - just hard drug use, or hard drug use and baseline outcome, or hard drug use and baseline outcome and adherence?
 
-Run final models and interpret results

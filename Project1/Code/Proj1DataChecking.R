@@ -92,6 +92,16 @@ summary(dat.02wide2)
 dat.wide.nomissing <- dat.02wide2[complete.cases(dat.02wide2), ]
 summary(dat.wide.nomissing)
 
+# log transform viral load because investigator said log viral load is clinically meaningful
+dat.wide.nomissing$log10vload.0 <- log10(dat.wide.nomissing$VLOAD.0)
+dat.wide.nomissing$log10vload.2 <- log10(dat.wide.nomissing$VLOAD.2)
+
+# create difference variables
+dat.wide.nomissing$log10vloaddiff <- dat.wide.nomissing$log10vload.2 - dat.wide.nomissing$log10vload.0
+dat.wide.nomissing$AGGMENTdiff <- dat.wide.nomissing$AGG_MENT.2 - dat.wide.nomissing$AGG_MENT.0
+dat.wide.nomissing$AGGPHYSdiff <- dat.wide.nomissing$AGG_PHYS.2 - dat.wide.nomissing$AGG_PHYS.0
+dat.wide.nomissing$LEU3Ndiff <- dat.wide.nomissing$LEU3N.2 - dat.wide.nomissing$LEU3N.0
+
 # keep a copy of the dataset that is all numerical (potentially easier to load in SAS)
 dat.wide.nomissing.num <- dat.wide.nomissing
 
@@ -108,12 +118,54 @@ dat.wide.nomissing$ADH.2 <- factor(dat.wide.nomissing$ADH.2)
 
 summary(dat.wide.nomissing)
 
-# log transform viral load because investigator said log viral load is clinically meaningful
-dat.wide.nomissing$log10vload.0 <- log10(dat.wide.nomissing$VLOAD.0)
-dat.wide.nomissing$log10vload.2 <- log10(dat.wide.nomissing$VLOAD.2)
 
-# create difference variables
-dat.wide.nomissing$log10vloaddiff <- dat.wide.nomissing$log10vload.2 - dat.wide.nomissing$log10vload.0
-dat.wide.nomissing$AGGMENTdiff <- dat.wide.nomissing$AGG_MENT.2 - dat.wide.nomissing$AGG_MENT.0
-dat.wide.nomissing$AGGPHYSdiff <- dat.wide.nomissing$AGG_PHYS.2 - dat.wide.nomissing$AGG_PHYS.0
-dat.wide.nomissing$LEU3Ndiff <- dat.wide.nomissing$LEU3N.2 - dat.wide.nomissing$LEU3N.0
+# creating datset for SAS and proc MCMC
+# all binary need to be 0 and 1 - not 1 and 2
+# need to ask: will SAS proc mcmc use the 0 as the reference? I think so but double check
+summary(dat.wide.nomissing.num)
+dropvarsSAS <- names(dat.wide.nomissing.num) %in% c("HASHF.0", "AGG_MENT.2", "AGG_PHYS.2",
+                                            "LEU3N.2", "VLOAD.2", "VLOAD.0", "log10vload.2")
+
+dat.SAS1 <- dat.wide.nomissing.num[!dropvarsSAS] # dropping variables not needed
+# changing the binaries to 0 and 1
+
+# remove all other datasets along the way to clean up the environment and just have SAS data
+rm(list = c("dat", "dat.02", "dat.02wide", "dat.02wide2", "dat.wide.nomissing", 
+            "dat.wide.nomissing.num", "dropvars", "dropvarsSAS"))
+
+
+# hashv.0 (marijuana use? 0 = no, 1 = yes)
+dat.SAS1$HASHV.0[dat.SAS1$HASHV.0 == 1] <- 0
+dat.SAS1$HASHV.0[dat.SAS1$HASHV.0 == 2] <- 1
+# smoke.0 (smoking status? 0 = never/former, 1 = current)
+dat.SAS1$SMOKE.0[dat.SAS1$SMOKE.0 == 1] <- 0
+dat.SAS1$SMOKE.0[dat.SAS1$SMOKE.0 == 2] <- 1
+# dkgrp.0 (alcohol use? 0 = 13 or less drinks/wk, 1 = >13 drinks/wk)
+dat.SAS1$DKGRP.0[dat.SAS1$DKGRP.0 == 1] <- 0
+dat.SAS1$DKGRP.0[dat.SAS1$DKGRP.0 == 2] <- 1
+# race.0 (0 = non-hispanic white, 1 = other)
+dat.SAS1$RACE.0[dat.SAS1$RACE.0 == 1] <- 0
+dat.SAS1$RACE.0[dat.SAS1$RACE.0 == 2] <- 1
+# educbas.0 (0 = HS or less, 1 = more than HS)
+dat.SAS1$EDUCBAS.0[dat.SAS1$EDUCBAS.0 == 1] <- 0 
+dat.SAS1$EDUCBAS.0[dat.SAS1$EDUCBAS.0 == 2] <- 1
+# hard_drugs.0 (already is a 0 and 1, hard drug use? 0 = no, 1 = yes)
+# adh.2 (0 = adherent >95%, 1 = not adherent <95%)
+dat.SAS1$ADH.2[dat.SAS1$ADH.2 == 1] <- 0
+dat.SAS1$ADH.2[dat.SAS1$ADH.2 == 2] <- 1
+
+# more than 2 levels in categorical: make more than one indicator variable
+# income.0
+dat.SAS1$income.0mid <- ifelse(dat.SAS1$income.0 == 2, 1, 0)
+dat.SAS1$income.0high <- ifelse(dat.SAS1$income.0 == 3, 1, 0)
+dat.SAS1$income.0low <- ifelse(dat.SAS1$income.0 == 1, 1, 0)
+
+# check these are what I want
+dat.SAS1[1:20, c("income.0", "income.0high", "income.0mid", "income.0low")]
+
+# Output clean file of data to use for running PROC MCMC models in SAS
+getwd()
+# change working directory so the data doesn't go to files accessible by github
+setwd("/Users/Michaela/Documents/CU AMC Fall 2017/BIOS6623/Proj1Data")
+getwd()
+write.csv(dat.SAS1, file = "Proj1SASDataClean.csv", row.names = FALSE)

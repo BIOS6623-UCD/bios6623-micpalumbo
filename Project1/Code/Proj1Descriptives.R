@@ -35,7 +35,7 @@ hist(dat.wide.nomissing$log10vloaddiff, main = "log10vload diff")
 # age.0
 hist(dat.wide.nomissing$age.0, main = "age baseline")
 
-# use either hashv or hashf - I will chooe hashv
+# use either hashv or hashf - I will choose hashv
 # hashv.o
 # marijuana use since last visit (1 = no, 2 = yes)
 table(dat.wide.nomissing$HASHV.0)
@@ -256,5 +256,9 @@ CrossTable(dat.wide.nomissing$ADH.2, dat.wide.nomissing$HASHV.0,
            prop.chisq = FALSE, prop.t = FALSE)
 
 ## Correlation betwen variables
-cor(dat.wide.nomissing)
-str(dat.wide.nomissing)
+library(psych)
+# icc() for continuous vs nominal
+# cor() for continuous vs continuous
+# chisquare for nominal vs. nominal
+
+## Make table 1?
