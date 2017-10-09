@@ -102,19 +102,25 @@ dat.wide.nomissing$AGGMENTdiff <- dat.wide.nomissing$AGG_MENT.2 - dat.wide.nomis
 dat.wide.nomissing$AGGPHYSdiff <- dat.wide.nomissing$AGG_PHYS.2 - dat.wide.nomissing$AGG_PHYS.0
 dat.wide.nomissing$LEU3Ndiff <- dat.wide.nomissing$LEU3N.2 - dat.wide.nomissing$LEU3N.0
 
+# remove outlier I later found with LEU3Ndiff
+dat.wide.nomissing$LEU3Ndiff[dat.wide.nomissing$LEU3Ndiff > 1100] <- NA
+dat.wide.nomissing <- dat.wide.nomissing[complete.cases(dat.wide.nomissing), ]
+
 # keep a copy of the dataset that is all numerical (potentially easier to load in SAS)
 dat.wide.nomissing.num <- dat.wide.nomissing
 
 # make categorical variables factors
-dat.wide.nomissing$HASHV.0 <- factor(dat.wide.nomissing$HASHV.0)
+dat.wide.nomissing$HASHV.0 <- factor(dat.wide.nomissing$HASHV.0, labels = c("no", "yes"))
 dat.wide.nomissing$HASHF.0 <- factor(dat.wide.nomissing$HASHF.0)
-dat.wide.nomissing$income.0 <- factor(dat.wide.nomissing$income.0)
-dat.wide.nomissing$SMOKE.0 <- factor(dat.wide.nomissing$SMOKE.0)
-dat.wide.nomissing$DKGRP.0 <- factor(dat.wide.nomissing$DKGRP.0)
-dat.wide.nomissing$RACE.0 <- factor(dat.wide.nomissing$RACE.0)
-dat.wide.nomissing$EDUCBAS.0 <- factor(dat.wide.nomissing$EDUCBAS.0)
-dat.wide.nomissing$hard_drugs.0 <-factor(dat.wide.nomissing$hard_drugs.0)
-dat.wide.nomissing$ADH.2 <- factor(dat.wide.nomissing$ADH.2)
+dat.wide.nomissing$income.0 <- factor(dat.wide.nomissing$income.0, labels = c("< 10000", "10000-40000", ">40000"))
+dat.wide.nomissing$SMOKE.0 <- factor(dat.wide.nomissing$SMOKE.0, labels = c("never/former", "current"))
+dat.wide.nomissing$DKGRP.0 <- factor(dat.wide.nomissing$DKGRP.0, labels = c("13 or less /week", ">13 /week"))
+dat.wide.nomissing$RACE.0 <- factor(dat.wide.nomissing$RACE.0, labels = c("NHW", "other"))
+dat.wide.nomissing$EDUCBAS.0 <- factor(dat.wide.nomissing$EDUCBAS.0, labels = c("HS or less", "more than HS"))
+# hard drug use?
+dat.wide.nomissing$hard_drugs.0 <-factor(dat.wide.nomissing$hard_drugs.0, labels = c("no", "yes"))
+# adherent?
+dat.wide.nomissing$ADH.2 <- factor(dat.wide.nomissing$ADH.2, labels = c("yes", "no"))
 
 summary(dat.wide.nomissing)
 

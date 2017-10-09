@@ -1,0 +1,1 @@
+Outcome,Mean,Std Dev,95% HPD Interval,DIC full ,DIC reduced,significantAggMentDiff,-1.1225,1.9128,"(-4.9229, 2.5846)",3091.36,3089.638,noAggPhysDiff,-3.3322,1.4651,"(-6.2292, -0.4980)",2881.642,2884.766,yesLog10VLoadDiff,0.0214,0.2137,"(-0.4054, 0.4326)",1284.639,1282.741,noCD4PlusTDiff,-189.2,31.0734,"(-251.4, -128.6)",5408.589,5443.617,yes

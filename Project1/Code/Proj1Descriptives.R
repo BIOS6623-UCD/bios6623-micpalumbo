@@ -62,13 +62,14 @@ table(dat.wide.nomissing$hard_drugs.0)
 table(dat.wide.nomissing$ADH.2)
 
 ## Relationships between primary predictor and outcomes
-plot(dat.wide.nomissing$AGGMENTdiff ~ dat.wide.nomissing$hard_drugs.0, xlab = "hard drug use (0=no 1=yes)",
-     ylab = "change in mental health score")
-plot(dat.wide.nomissing$AGGPHYSdiff ~ dat.wide.nomissing$hard_drugs.0, xlab = "hard drug use (0=no 1=yes)",
-     ylab = "change in physical health score")
-plot(dat.wide.nomissing$log10vloaddiff ~ dat.wide.nomissing$hard_drugs.0, xlab = "hard drug use (0=no 1=yes)",
+par(mfrow =  c(2, 2))
+plot(dat.wide.nomissing$AGGMENTdiff ~ dat.wide.nomissing$hard_drugs, xlab = "hard drug use?",
+     ylab = "change mental health score")
+plot(dat.wide.nomissing$AGGPHYSdiff ~ dat.wide.nomissing$hard_drugs, xlab = "hard drug use?",
+     ylab = "change physical health score")
+plot(dat.wide.nomissing$log10vloaddiff ~ dat.wide.nomissing$hard_drugs, xlab = "hard drug use?",
      ylab = "change in log10 viral load")
-plot(dat.wide.nomissing$LEU3Ndiff ~ dat.wide.nomissing$hard_drugs.0, xlab = "hard drug use (0=no 1=yes)",
+plot(dat.wide.nomissing$CD4PlusTDiff ~ dat.wide.nomissing$hard_drugs, xlab = "hard drug use?",
      ylab = "change in CD4+ T Cell count")
 
 ## Relationships between covariates and outcomes
@@ -222,43 +223,100 @@ CrossTable(dat.wide.nomissing$hard_drugs.0, dat.wide.nomissing$income.0,
 
 # marijuana use
 CrossTable(dat.wide.nomissing$hard_drugs.0, dat.wide.nomissing$HASHV.0, 
-           prop.chisq = FALSE, prop.t = FALSE)
+           prop.chisq = TRUE, prop.t = FALSE)
 
 ## Relationships between demographic covariates and adherence
 # age (boxplot)
-plot(dat.wide.nomissing$age.0 ~ dat.wide.nomissing$ADH.2, xlab = "adherence (1=yes 2=no)",
+plot(dat.wide.nomissing$age ~ dat.wide.nomissing$adherence, xlab = "adherence (1=yes 2=no)",
      ylab = "age")
 # bmi (boxplot)
-plot(dat.wide.nomissing$BMI.0 ~ dat.wide.nomissing$hard_drugs.0, xlab = "adherence (1=yes 2=no)",
+plot(dat.wide.nomissing$BMI ~ dat.wide.nomissing$adherence, xlab = "adherence (1=yes 2=no)",
      ylab = "bmi")
 
 # education
-CrossTable(dat.wide.nomissing$ADH.2, dat.wide.nomissing$EDUCBAS.0, 
-           prop.chisq = FALSE, prop.t = FALSE)
+CrossTable(dat.wide.nomissing$adherence, dat.wide.nomissing$education, 
+           prop.chisq = FALSE, prop.t = TRUE)
+test <- table(dat.wide.nomissing$education, dat.wide.nomissing$adherence)
+barplot(test, beside = TRUE, col = c("red", "green"))
+legend("top", c("HS or less", "more than HS"), bty = "n", 
+       cex = 0.9, fill = c("red", "green"))
 # race
-CrossTable(dat.wide.nomissing$ADH.2, dat.wide.nomissing$RACE.0, 
+CrossTable(dat.wide.nomissing$adherence, dat.wide.nomissing$race, 
            prop.chisq = FALSE, prop.t = FALSE)
+test2 <- table(dat.wide.nomissing$race, dat.wide.nomissing$adherence)
+barplot(test2, beside = TRUE)
 
 # alcohol use
 CrossTable(dat.wide.nomissing$ADH.2, dat.wide.nomissing$DKGRP.0, 
            prop.chisq = FALSE, prop.t = FALSE)
+test3 <- table(dat.wide.nomissing$alcohol_use, dat.wide.nomissing$adherence)
+barplot(test3, beside = TRUE)
 
 # smoking status
 CrossTable(dat.wide.nomissing$ADH.2, dat.wide.nomissing$SMOKE.0, 
            prop.chisq = FALSE, prop.t = FALSE)
+test4 <- table(dat.wide.nomissing$smoker, dat.wide.nomissing$adherence)
+barplot(test4, beside = TRUE)
 
 # income
 CrossTable(dat.wide.nomissing$ADH.2, dat.wide.nomissing$income.0, 
            prop.chisq = FALSE, prop.t = FALSE)
+test5 <- table(dat.wide.nomissing$income, dat.wide.nomissing$adherence)
+barplot(test5, beside = TRUE)
 
 # marijuana use
 CrossTable(dat.wide.nomissing$ADH.2, dat.wide.nomissing$HASHV.0, 
            prop.chisq = FALSE, prop.t = FALSE)
+test6 <- table(dat.wide.nomissing$marijuana_use, dat.wide.nomissing$adherence)
+barplot(test6, beside = TRUE)
 
-## Correlation betwen variables
-library(psych)
-# icc() for continuous vs nominal
-# cor() for continuous vs continuous
-# chisquare for nominal vs. nominal
+## Make table 1
+library(tableone)
+# clean variable names for table
+dat.wide.nomissing$income <- dat.wide.nomissing$income.0
+dat.wide.nomissing$income.0 <- NULL
 
-## Make table 1?
+dat.wide.nomissing$marijuana_use <- dat.wide.nomissing$HASHV.0
+dat.wide.nomissing$HASHV.0 <- NULL
+dat.wide.nomissing$HASHF.0 <- NULL
+
+dat.wide.nomissing$BMI <- dat.wide.nomissing$BMI.0
+dat.wide.nomissing$BMI.0 <- NULL
+
+dat.wide.nomissing$smoker <- dat.wide.nomissing$SMOKE.0
+dat.wide.nomissing$SMOKE.0 <- NULL
+
+dat.wide.nomissing$alcohol_use <- dat.wide.nomissing$DKGRP.0
+dat.wide.nomissing$DKGRP.0 <- NULL
+
+dat.wide.nomissing$race <- dat.wide.nomissing$RACE.0
+dat.wide.nomissing$RACE.0 <- NULL
+
+dat.wide.nomissing$education <- dat.wide.nomissing$EDUCBAS.0
+dat.wide.nomissing$EDUCBAS.0 <- NULL
+
+dat.wide.nomissing$age <- dat.wide.nomissing$age.0
+dat.wide.nomissing$age.0 <- NULL
+
+dat.wide.nomissing$hard_drugs <- dat.wide.nomissing$hard_drugs.0
+dat.wide.nomissing$hard_drugs.0 <- NULL
+
+dat.wide.nomissing$adherence <- dat.wide.nomissing$ADH.2
+dat.wide.nomissing$ADH.2 <- NULL
+
+dat.wide.nomissing$CD4PlusTDiff <- dat.wide.nomissing$LEU3Ndiff
+dat.wide.nomissing$LEU3Ndiff <- NULL
+
+
+t1vars <- c("AGGMENTdiff", "AGGPHYSdiff", "log10vloaddiff", "CD4PlusTDiff", "age", "race", "income",
+            "BMI", "education", "smoker", "alcohol_use", "marijuana_use", "adherence" )
+tbl1 <- CreateTableOne(t1vars, strata = "hard_drugs", data = dat.wide.nomissing)
+print(tbl1, test = FALSE)
+tab1mat <- print(tbl1, quote = FALSE, noSpaces = TRUE, printToggle = FALSE)
+getwd()
+setwd("/Users/Michaela/Repositories/bios6623-micpalumbo/Project1/Reports")
+write.csv(tab1mat, file = "Proj1Tab1.csv")
+
+## model output
+output <- read.csv("/Users/Michaela/Repositories/bios6623-micpalumbo/Project1/Reports/modeloutputsummary.csv")
+str(output)
