@@ -31,6 +31,35 @@ Create a new BMI variable where use calculation provided to see if BMI was wrong
 Assess pattern of missingness for missing covariates (might not be too concerning because the outcome is not missing)
 Look at trends and descriptives by hospital, by time period, by procedure type, by asa, by missing vs. not missing a covariate, by 30 day mortality
 
+Work on 10/17/17:
+Removed the subjects who had incorrect procedure type.
+Investigated the problem with the bimodal weight. 
+First did descriptives of weight across time period and then across hospital.
+When did it across time period I noticed that number of missing weight values were fairly equal across sixmonth periods. Except there was a higher missingness in the last period (period 39). Mean weight is approximately the same across time periods except for last period it is a lot lower. All periods except for the last period have the same range of weights so the error in weight entry is likely in the final sixmonth period. 
+When I did the weights across hospital I noticed that hopsitals 1-16 all have a lower mean and unreasonable minimum weights.
+Next I decided to look at weight across hopsital for just period 39. I noticed that hospital 30 has no weight data for the 39th period. This explains why period 39 has the highest amount of missing weight data because this period has missing data for an entire hospital. It looks like we can confirm that in period 39 hospitals 1-16 have all incorrectly entered weights (used kg instead of lbs) based on the min and max of weights for these hospital during period 39.
+
+Now I transformed weight for subjects in hospitals 1-16 for period 39 then used the new weight variable to calculate a new BMI variable. Distribution of new weight and bmi look good! Still might be concerned with impossible bmi. The min is 11 (and 5 lowest values are 11 - 14). Are these possible? For BMI cutoffs less than 18.5 is considered underweight and less than 16 is considered severe thinness.
+
+Assessment of missingness:
+Variables with missing data: procedure code, BMI/weight/height (will just examine BMI because it is all we will be including in the model), asa, and albumin. 
+
+Procedure Code: missingness of procedure type is even between those who did and did not die after 30 days, missingness of procedure type is fairly even across hospitals and periods, people with asa 4,5, or missing had a slightly higher proportion (3-4%) of missing procedure data compared to people with asa 1,2,3, mean albumin and mean bmi approximatley equal between those missing and not missing procedure type
+appears MCAR
+
+BMI: No BMI data at all for hospital 30 in period 39. Higher percentage of missing BMI data as ASA score increases (slight increase - not too concerning), slightly more missing BMI data for those who died after 30 days (but not too crazy of a difference), other than hospital 30 and period 39 BMI missingness is fairly even across hospitals and periods, fairly even BMI missingess across procedure type, mean albumin approximately same between those missing and not missing BMI
+excluding that one hospital- appears MCAR
+
+ASA: missingness of ASA fairly similar between those who did and did not die after 30 days, missingness of ASA fairly evene across hospitals and periods, missingness of ASA fairly even across procedure type (slightly higher for procedure = 1), mean albumin and mean BMI approximately the same between those missing vs not missing ASA
+appears MCAR
+
+Albumin: more missing albumin data for people who did not die after 30 days (what may be more concering is the difference in 30 day mortality rate between those who did and did not have missing data), missingness of albumin appears fairly even across hospitals and periods, missingness of albumin fairly even across procedure type, missingness of albumin seems to be dependent on ASA (indicating MAR), for ASA 1,2 or 3 there is no albumin data (aka 100% missing), for ASA 4 albumin is ~50% missing, for ASA 5 albumin is 0% missing. Recall ASA 1 indicates good health and ASA 5 indicates near death, so don't have albumin scores for people in the healthier spectrum of the ASA scale
+appears MAR
+
 Next steps:
-First cleaning - remove proced 2, and fix weight and bmi
-Then assess missingness and potentially clean more
+Inform investigators that hospital 30 has no weight data for period 39. 
+Tell that fixed weight and BMI, but there are still some concerningly low BMI values and need to ask if they are plausible or likely errors that need to be removed?
+Consider making plots to further assess patterns of missingness
+Answer question: is death rate the same between people who do and do not have missing data? Answer this for each covariate and do it with some sort of measure of significance rather than me just eyeballing the proportions
+Begin fitting models
+Potentially do sensitivity analysis (model with and without albumin as covariate)
