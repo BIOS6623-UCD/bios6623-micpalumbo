@@ -57,9 +57,11 @@ Albumin: more missing albumin data for people who did not die after 30 days (wha
 appears MAR
 
 Next steps:
-Inform investigators that hospital 30 has no weight data for period 39. 
-Tell that fixed weight and BMI, but there are still some concerningly low BMI values and need to ask if they are plausible or likely errors that need to be removed?
+Inform investigators that hospital 30 has no weight data for period 39. - said to talk about it in discussion. 
 Consider making plots to further assess patterns of missingness
 Answer question: is death rate the same between people who do and do not have missing data? Answer this for each covariate and do it with some sort of measure of significance rather than me just eyeballing the proportions
-Begin fitting models
-Potentially do sensitivity analysis (model with and without albumin as covariate)
+Descriptive statistics
+Begin fitting models - model with and without albumin as covariate)
+Bootstrap error estimates
+figure out how to output sas dataset as csv to use to create table when I make final report
+
