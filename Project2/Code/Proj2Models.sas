@@ -15,8 +15,8 @@ proc logistic data = proj2b;
 run;
 /*5172 observations deleted because of missing values*/
 /*AIC = 5914.578*/
-proc print data = predicted (obs = 300);
-run;
+*proc print data = predicted (obs = 300);
+*run;
 
 /*subset to only keep data from period 39*/
 data predicted39;
@@ -33,11 +33,21 @@ run;
 
 /*observed rates for period 39*/
 proc freq data = predicted39;
-	tables death30*hospcode;
+	tables death30*hospcode / out = obsrate outpct;
 	title "observed rate for each hospital";
 run;
 /*look at col percent for each hospital (for death30 = 1) that is the percentage mortalilty*/
+proc print data = obsrate;
+run;
 
+data obsrate2;
+	set obsrate;
+	if death30 = 0 then delete;
+	drop count percent pct_row;
+run;
+
+proc print data = obsrate2;
+run;
 
 
 

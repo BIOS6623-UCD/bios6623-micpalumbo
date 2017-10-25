@@ -60,8 +60,26 @@ Next steps:
 Inform investigators that hospital 30 has no weight data for period 39. - said to talk about it in discussion. 
 Consider making plots to further assess patterns of missingness
 Answer question: is death rate the same between people who do and do not have missing data? Answer this for each covariate and do it with some sort of measure of significance rather than me just eyeballing the proportions
-Descriptive statistics
+Descriptive statistics (make table 1 and appropriate graphs)
 Begin fitting models - model with and without albumin as covariate)
 Bootstrap error estimates
 figure out how to output sas dataset as csv to use to create table when I make final report
-
+3 models: 
+1 - model with missing albumin data cases removed and albumin included as covariate (done)
+2 - model with missing albumin data cases removed (i.e. same sample as 1) and don't include albumin
+3 - final model do inference on is model without albumin but does not delete subjects with
+Start working on report
+create table they want with observed and expected rates and 95% CIs
+Discussion: talk about choice to leave out albumin because of 60% missingness and didn't want to waste data - also because MAR might cause bias (either the sick or healthy people left out based on ASA)
+Include a percent difference between observed and expected values (helpful for clinical)
+Concerned if observed divided by expected > 1.2 (that is what you flag) - i.e. if the differ by 20% or more of what your expected value is then that is clinically concerning
+Add this column to the table with observed rate, expected rate, and bootstrap CI of expected rate
+Table 1 - give info about VA population as a whole, add some measure of how much the average has variation
+mean and std dev (if skewed might want to do 25th median and 75th)
+Get dataset with stuff I want to save out of SAS (as SAS dataset or as csv if possible)
+Merge datasets based on hospital as common element
+http://sphweb.bumc.bu.edu/otlt/mph-modules/bs/sas/sas-basics1/SAS-Basics14.html
+https://communities.sas.com/t5/SAS-Analytics-U/How-to-save-sas7bdat-datasets-from-SAS-University-edition/td-p/144778
+https://communities.sas.com/t5/SAS-Procedures/save-work-file-in-a-permanent-folder/td-p/46339
+https://communities.sas.com/t5/SAS-Procedures/Exporting-a-SAS-data-set-in-SAS-format/td-p/161012
+http://support.sas.com/documentation/cdl/en/proc/61895/HTML/default/viewer.htm#a000247723.htm
