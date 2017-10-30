@@ -73,6 +73,7 @@ create table they want with observed and expected rates and 95% CIs
 Discussion: talk about choice to leave out albumin because of 60% missingness and didn't want to waste data - also because MAR might cause bias (either the sick or healthy people left out based on ASA)
 Include a percent difference between observed and expected values (helpful for clinical)
 Concerned if observed divided by expected > 1.2 (that is what you flag) - i.e. if the differ by 20% or more of what your expected value is then that is clinically concerning
+If subtract 1 from this then get the % deviation from the expected (do an asterik with description of how this was calculated.)
 Add this column to the table with observed rate, expected rate, and bootstrap CI of expected rate
 Table 1 - give info about VA population as a whole, add some measure of how much the average has variation
 mean and std dev (if skewed might want to do 25th median and 75th)

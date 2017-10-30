@@ -1,0 +1,40 @@
+---
+title: "BIOS 6623 Project 2 Written Report"
+author: "Michaela Palumbo"
+header-includes:
+  - \usepackage{setspace}\doublespacing
+  - \setlength\parindent{24pt}\setlength{\parskip}{0.0pt plus 1.0pt}
+  - \usepackage{indentfirst}
+date: "November 1, 2017"
+output: pdf_document
+fontsize: 12pt
+---
+
+## Introduction
+
+The goal of this analysis was to determine whether the observed 30 day mortality rate for patients undergoing heart surgery at 44 different VA hospitals during the current six-month period is close to what they expect the mortality rate to be for each hospital. The results of this analysis will be used by VA hospital executives. They would like to identify hospitals that have either higher or lower than expected mortality rates. This will inform executives as to which hospitals they should visit to learn about what makes these hospitals different (either for better or worse). They then hope to use what they learn from these visits to potentially implement changes in standards of practice or procedure across all hospitals that will helpfully improve patient outcomes.The hypothesis of interest is whether the observed mortality rate is significantly different from the expected mortality rate from each hospital. A clinically significant difference is defined as a 20% or larger difference from the expected rate. The investigators provided data from all 44 hospital for the current sixmont period (period 39) and also for the previous 5 sixmonth periods (34-38). The variables included in the dataset included height, weight, BMI, procedure type (CABG or valve replacement), ASA, and albumin. Albumin was a new variable they provided that hadn't been used in past models but the investigators hoped to include this biological marker in the model. 
+
+## Methods
+
+Discuss converting kg to pounds for weight (identify which hospitals so they know to make sure they use pounds in future)
+
+Describe the methods used to clean and analyze the data. Justify and explain your data analysis approach (~ 2 pages).  Should be written in past tense and should not include results.  Do NOT include equations.
+
+## Results
+
+Present results for analyses described in the methods (~1-1.5 pages). Use Tables and Figures as appropriate, including in the text the full interpretation of statistical results for the main findings (i.e. point estimates, confidence bounds, p-values, interpretation of results of test).
+
+Talk about the hospitals that were drastically different then reference the table. 
+
+## Conclusions
+
+Interpret your results (~.5 to 1 page) in context of scientific question(s). Also discuss any limitations to your analysis that may affect interpretation or that require additional consideration by the investigator.
+
+Discuss missing data and the lack of BMI/weight data for hospital 30. Discuss why we left out albumin from final model. 
+
+## Reproducible Research Information
+
+The code for this report can be found in the "Code" folder within the "Project2" folder in my github directory. The pdfs of the output for the code run can also be found my github directory in the "ModelsOutput" folder within the "Results" folder within the "Project2" folder. My github directory is as follows: BIOS6623-UCD/bios6623-micpalumbo. A description of each of the files in my "Project2" folder including this report can be found in the readme.md file within the "Project2" folder. The code I used to read in the data can be found in the file "Proj2DataCleaning.sas" located in the code folder described above.
+
+## Appendix
+

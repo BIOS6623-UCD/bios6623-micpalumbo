@@ -22,3 +22,9 @@ Proj2Bootstrap.sas - runs bootstrap simulation to get confidence interval for ex
 Reports Folder: Includes interim and final written reports and presentations. Also includes any important tables or figures. 
 
 Proj2Interim.pptx - Interim presentation slides summarizing inital thoughts from looking into the data and initial plans for analysis
+
+Proj2WrittenReport.rmd - Final written report for project 2
+
+Proj2WrittenReport.pdf - Pdf of final written report for project 2
+
+ModelsOutput Folder: Contains output from code including investigations into assessing patterns of missing data, initial descriptives on raw data, bootstrap results, results for final model, etc.
