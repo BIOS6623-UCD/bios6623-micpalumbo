@@ -56,6 +56,11 @@ run;
 proc print data = bootci;
 run;
 
+proc export data = bootci dbms = csv
+outfile = "/folders/myfolders/bootci.csv"
+replace;
+run;
+
 	
 	
 

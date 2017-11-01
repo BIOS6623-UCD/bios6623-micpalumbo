@@ -29,6 +29,15 @@ proc means data = predicted39 mean n;
 	class hospcode;
 	var pred;
 	title "expected rate for each hospital";
+	output out = exprate mean = exp;
+run;
+
+proc print data = exprate;
+run;
+
+proc export data = exprate dbms = csv
+outfile = "/folders/myfolders/exprate.csv"
+replace;
 run;
 
 /*observed rates for period 39*/
@@ -47,6 +56,11 @@ data obsrate2;
 run;
 
 proc print data = obsrate2;
+run;
+
+proc export data = obsrate2 dbms = csv
+outfile = "/folders/myfolders/obsrate.csv"
+replace;
 run;
 
 
