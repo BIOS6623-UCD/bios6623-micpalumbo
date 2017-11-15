@@ -92,47 +92,58 @@ length(unique(dat$id)) # 216 subjects
 # use these ids to subset dataset and keep these subjects
 # maybe write a function?
 
-keep3ormore <- function(df, outcome){
-  subj <- unique(df$id)
-  for(i in subj){
-   # remove NAs and find # of observations (length of vector for each person) 
-  }
-  df$numob <- rep(numobs)
-  
-}
-
 # testing
-length(dat.br$age)
-test <- unique(dat$id)
-length(test)
-test <- as.vector(test)
-str(test)
-tail(dat.br)
-subjdattest <- subset(dat.br, id == 101 & blockR != "NA")
-nrow(subjdattest)
-numobs <- as.vector(NULL, mode = "numeric")
-for(n in c(101, 389)){
-  subjdat <- subset(dat.br, id == n & blockR != "NA") # make dataset for each subject
-  # remove rows that have NAs in outcome 
-  print(nrow(subjdat))
-  # find length of outcome vector
-  numobs[n] <- as.numeric(nrow(subjdat))
-  # create vector that has # of repeated measurements for each subject
+table(dat$id, is.na(dat$blockR))
+# gives table where true is number of missing blockR and false is number of observed blockR measures
+table(dat$id, is.na(dat$blockR))[,1]
+# selects the false column (i.e. number of observed blockR responses for each sub)
+
+test <- table(dat$id, is.na(dat$blockR))[,1]
+test2 <- data.frame(ID = names(test), value = test) # creates data frame with 2 columns: ID and # obs
+less3id <- as.numeric(as.vector(test2[test2$value < 3, ]$ID)) # vector containing IDs for subj w/ < 3
+newdat
+
+
+keep3ormore <- function(df, outcome){
+  numobs <- table(df$id, is.na(outcome))[,1]
+  numobsdf <- data.frame(ID = names(numobs), value = numobs)
+  less3id <- as.numeric(as.vector(numobsdf[numobsdf$value < 3, ]$ID))
+  newdf <- subset(df, !(df$id %in% less3id))
 }
 
-as.vector(unique(dat.br$id))
-# repeat the numobs vector to be part of the dataframe in long format
-# if numobs < 3 then drop the row
-range(test)
+## CLEANING FINAL DATA SETS TO BE USED FOR ANALYSIS ##
+
 # blockR
-dat.br <- dat[, c(1, 2, 3, 4, 5, 6, 10, 11)]
-summary(dat.br) # 1851 missing blockR observations
+# remove subj with < 3 obs
+dat.br <- keep3ormore(df = dat, outcome = dat$blockR)
+# remove nas from remaining subjects who had enough observations
+dat.br.comp <- subset(dat.br, !(is.na(dat.br$blockR)))
+# put ageonset = 1000 instead of NA for people who did not get dementia
+dat.br.comp$ageonset <- ifelse(is.na(dat.br.comp$ageonset), 1000, dat.br.comp$ageonset)
 
 # animals
-dat.an <- dat[, c(1, 2, 3, 4, 5, 7, 10, 11)]
+# remove subj with < 3 obs
+dat.an <- keep3ormore(df = dat, outcome = dat$animals)
+# remove nas from remaining subjects who had enough observations
+dat.an.comp <- subset(dat.an, !(is.na(dat.an$animals)))
+# put ageonset = 1000 instead of NA for people who did not get dementia
+dat.an.comp$ageonset <- ifelse(is.na(dat.an.comp$ageonset), 1000, dat.an.comp$ageonset)
 
 # logmemI
-dat.lm1 <- dat[, c(1, 2, 3, 4, 5, 8, 10, 11)]
+# remove subj with < 3 obs
+dat.lm1 <- keep3ormore(df = dat, outcome = dat$logmemI)
+# remove nas from remaining subjects who had enough observations
+dat.lm1.comp <- subset(dat.lm1, !(is.na(dat.lm1$logmemI))) 
+# put ageonset = 1000 instead of NA for people who did not get dementia
+dat.lm1.comp$ageonset <- ifelse(is.na(dat.lm1.comp$ageonset), 1000, dat.lm1.comp$ageonset)
 
 # logmemII
-dat.lm2 <- dat[, c(1, 2, 3, 4, 5, 9, 10, 11)]
+# remove subj with < 3 obs
+dat.lm2 <- keep3ormore(df = dat, outcome = dat$logmemII)
+# remove nas from remaining subjects who had enough observations
+dat.lm2.comp <- subset(dat.lm2, !(is.na(dat.lm2$logmemII)))
+# put ageonset = 1000 instead of NA for people who did not get dementia
+dat.lm2.comp$ageonset <- ifelse(is.na(dat.lm2.comp$ageonset), 1000, dat.lm2.comp$ageonset)
+
+# remove extra datsets for space
+rm(list = c("dat.br", "dat.an", "dat.lm1", "dat.lm2"))
