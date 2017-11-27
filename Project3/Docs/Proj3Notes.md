@@ -22,3 +22,36 @@ Adding correlation to models is secondary to getting the fixed effects part corr
 Would like to adjust for SES and gender in models 
 
 Group2: Searching data for the point in time where change occurs
+
+November 15, 2017:
+The kink (change in slope) is occuring at a different time point for each person
+The change point only kicks in for people who have a dementia diagnosis
+We will only have linear terms (no quadratic)
+Model fixed effects: including effect of case (i.e. have dementia yes/no) allows for different intercepts for those who get diagnosed and those who don't, including effect of interaction case*age allows for a different slope for those who get diagnosed and those who don't
+A random intercept allows every subject to have a random intercept
+Random intercept with simple R structure accounts for the correlation of repeated measures on the same subject. It is equivalent to a model with no random effects and a CS R structure.
+We want to compare slopes between groups before the change point and after the change point.
+Within the people with dementia we want to compare the slope before the change point and after the change point to see if it is different. 
+Once have fixed effects, could get more detailed with the correlation structure by allowing a different covariance structure for each group... (not sure I will want or know how to do this in R)
+
+
+
+November 20, 2017:
+Variance for change point estimate-
+conditional variance (ladybug theorem), see about what variance calculation they did in the paper (pg. 1562 has variance for beta coefficients)
+var(betahat) = average of variances of the betas over each of the change points tested + variance of a list of betas?
+pg. 1561 using the profile likelihood is what you use to get confidence interval for mle change point
+
+Table1: is baseline the first time you see them? yes
+70 or 71 demented people
+Mother dataset- do table 1 before subsetting out people with less than 3 measures
+Then tell how many people dropped out due to selection for each outcome dataset
+Baseline is the first time they are seen with at least 1 outcome
+
+In write-up, talk about exclusion criteria for determining analytic sample size
+Ask investigators what sample I should use for table 1 (do it for analytic sample for each outcome?, do it for entire sample size?)
+
+November 22, 2017:
+Only doing animals outcome now!!!
+Figure out calculating conditional variance for beta estimates & how to code this 
+Figure out calculating 95% CI for the change point & how to code this 

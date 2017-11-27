@@ -1,0 +1,68 @@
+---
+title: "BIOS 6623 Project 3 Written Report"
+author: "Michaela Palumbo"
+header-includes:
+  - \usepackage{setspace}\doublespacing
+  - \setlength\parindent{24pt}\setlength{\parskip}{0.0pt plus 1.0pt}
+  - \usepackage{indentfirst}
+date: "November 26, 2017"
+output: pdf_document
+fontsize: 12pt
+---
+
+## Introduction
+
+This study aimed to assess trajectories of memory loss in community dwelling elderly patients. Subjects were cognitively intact when enrolled in the study. They were visited annually after enrollment. Memory abilities were measured using the category fluency for animals test. In addition, subjects received a Clinical Dementia Rating (CDR) score. These scores were used to identify subjects as having developed mild cognitive impairment (MCI). The data provided by the investigator contained measures collected on 216 elderly subjects. The timing and number of repeated measurements varied from subject to subject. The investigators were interested in determining the rate of memory decline in both subjects who did not get an MCI diagnosis and those who did receive an MCI diagnosis. Investigators were also interested in identifying if there was a time leading up to diagnosis at which the rate of memory decline changed or accelerated. To determine the rate of memory decline, the slope of the regression line was estimated for subjects with and without MCI. To determine if there was a change in memory decline leading up to MCI diagnosis we estimated a change point and tested whether  the slopes before and after the change point were statistically different. 
+
+
+## Methods
+
+To fit the models needed to answer our questions of interest, we required subjects had at least 3 repeated outcome measurements. Subjects with 2 or less animals measurements were removed from the dataset. We plotted trajectories for all subjects, color-coding those who did and did not have a MCI diagnosis differently so that we could graphically assess whether there appeared to be differences in rates of memory decline between those who did and did not get an MCI diagnosis. For those subjects who did receive and MCI diagnosis, we also plotted the animals outcome versus time to diagnosis to graphically visualize whether there appeared to be a change point. 
+
+We fit a linear mixed model with a change point. The outcome for our model was the animals memory skill measure. The model included an indicator of whether a subject received a MCI diagnosis (we will call this variable case) as a covariate. The case variable was equal to 1 for subjects who received an MCI diagnosis and 0 for those who did not receive an MCI dignosis. Other covariates included in the model were age, gender, and socioeconomic status. The model also included an age by case interaction. To account for the change point, a final term was included in the model that took the max of 0 and the following value: age at visit j minus age at diagnosis plus tau. Here tau was used to represent the change point. This term was only included for subjects who receiveid a diagnosis (i.e. for subjects with case = 1). The model included a random intercept for subject and specified a simple error structure. The random intercept term was included to account for the correlation of repeated measurements taken on a subject. 
+
+To search for a change point, we ran models as described above with a number of different change points. We tested change points from 0 to 10 intervaled by 0.1. Therefore we tested change point values of 0, 0.1, 0.2, 0.3, ..., 9.8, 9.9, 10. We saved the log likelihoods for all of these models. We then maximized the log likelihoods to get a maximum likelihood estimate for the change point. A plot of the log likelihoods can be found in figure 1. We then fit a final model that used the estimated change point. This final model was used for interpretation. We performed a number of general linear hypothesis tests by specifying contrasts to answer the study questions. 
+
+To estimate the standard errors of our beta coefficients and to approximate a 95% confidence interval for our change point estimate we used bootstrapping. We repeated the analysis described above for 1000 bootstrap samples. We were then able to get the standard errors and quantiles for the bootstrap samples' coefficients, hypothesis tests of interest, and change points. We used these boostrap estimates of standard errors and confidence intervals for interpreting our results. 
+
+
+## Results
+
+After cleaning the data, 187 subjects remained in the analytic dataset. Descriptive statistics and models were carried out using the analytic dataset. Of these subjects, 68 were diagnosed with MCI at some point during the study. Of those who were diagnosed with MCI, 66.18% were female compared with 50.42% females in the group of healthy subjects. Average age at the first visit for patients with MCI diagnosis was 85.24. This was higher than the average age at the first visit among healthy individuals which was 77.16. Among those diagnosed with MCI, the average age at diagnosis was 90.371. The average animals score at the first visit was 15.62 for those who would be diagnosed with MCI and 18.30 for healthy individuals. The average animal score at the last visit was 8.49 for those diagnosed with MCI and 17.49 for those not diagnosed with MCI. These trends match up with the differences between groups that can be seen graphically in figure 2 (appendix). More detailed descriptives can be found in Table 1 in the appendix. 
+
+Figure 3 shows animals score versus years before diagnosis for patients with a MCI diagnosis. By looking at the graph it appears that the slopes of the trajectories become steeper after subjects reach the point of about 3 to 4 years before diagnosis. Our estimated change point at which the slope changes among patients diagnosed with MCI was 3.9 (95% CI: 3.0 to 5.4) years before diagnosis. This result matches the patterns that were visualized in figure 3. Figure 4 shows the predicted values for a subset of the subjects included in the analyis. 
+
+Table 2 (appendix) contains the results of all relevant hypotheses tested. Among healthy individuals, it was estimated that animals score decreases by 0.1766 units (95% CI: 0.1284 to 0.2274) for every one unit increase in age. Among individuals diagnosed with MCI the animals score was estimated to decrease by 0.1797 (95% CI: -0.0042 to 0.3293) units for every one unit increase in age before the change point. After the change point, the animals score was estimated to decrease by 1.0866 units (95% CI: 0.8790 to 1.3277) for every one unit increase in age among individuals diagnosed with MCI. Among these individuals diagnosed with MCI, the rate of decline of the animals score was 0.907 units (95% CI: 0.6349 to 1.2382) more steep after the change point than before the change point. The rate of decline in animals score is statistically significantly greater after the changepoint (p < 0.0001). In patients diagnosed with MCI the rate of decline in animals score before the changepoint is not statistically significantly different than the rate of decline in animals score for healthy individuals (p = 0.4906)
+
+
+## Conclusions
+
+For healthy individuals, animals score declines at a rate of 0.1766 units for each 1 year increase in age. For individuals diagnosed with MCI, we estimated that at 3.9 years before MCI diagnosis the rate of decline in animals score accelerates. Among these individuals, the animals score declines at a rate of 0.1797 units for each 1 year increase in age before the change point, but after the change point declines at a rate of 1.0866 units per 1 year increase in age. The rate of decline is significantly different before and after the change point. This may allow clinicians to decide to start preventative treatments if they see a patient whose animals score begins to decline more rapidly. Clinically, this could be helpful for identifying patients that may benefit from treatment and those who may not be in need of preventative treatment. It is also notable that in patients who will be diagnosed with MCI, the rate of decline in animals score before the change point is not significantly different than the rate of decline seen in healthy individuals. Therefore, before the change point occurs, the rate of decline is similar for healthy individuals and those who will eventually be diagnosed with MCI. 
+
+One limitation of this analysis is that we only looked at one of the outcome measures of memory performance. The measure only assesses memory function in a specific area of the brain. It may be helpful to perform further analyses using memory outcomes that assess cognitive functioning in different brain regions. This would then allow us to assess whether the patterns of memory loss are similar to what we observed with the category fluency for animals test. 
+
+
+## Reproducible Research Information
+
+The code for this report can be found in the "Code" folder within the "Project3" folder in my github directory. My github directory is as follows: BIOS6623-UCD/bios6623-micpalumbo. A description of each of the files in my "Project3" folder including this report can be found in the readme.md file within the "Project3" folder. The code I used to read in the data can be found in the file "Proj3DataChecking.R" located in the code folder described above.
+
+## References
+Code for the change point model and boostrap estimates of standard error and confidence intervals was adapted from code written by Camille Moore entitled "bootstrap_example_6623.R". 
+
+## Appendix
+
+\includegraphics[width = 15cm]{/Users/Michaela/Repositories/bios6623-micpalumbo/Project3/Reports/figs/table1.png}
+
+\includegraphics[width = 15cm]{/Users/Michaela/Repositories/bios6623-micpalumbo/Project3/Reports/figs/table2.png}
+
+### Figure 1. Searching for a ChangePoint: Maximum Likelihood Estimation
+\includegraphics[width = 10cm]{/Users/Michaela/Repositories/bios6623-micpalumbo/Project3/Reports/figs/cpll.png}
+
+### Figure 2. Animals Score Trajectories Stratified by Dementia Diagnosis
+\includegraphics[width = 12cm]{/Users/Michaela/Repositories/bios6623-micpalumbo/Project3/Reports/figs/trajectory1.png}
+
+### Figure 3. DMI patients: Animals Score Across Time to Diagnosis
+\includegraphics[width = 10cm]{/Users/Michaela/Repositories/bios6623-micpalumbo/Project3/Reports/figs/trajectory2.png}
+
+### Figure 4. Fitted Trajectories for a Subset of Subjects
+\includegraphics[width = 12cm]{/Users/Michaela/Repositories/bios6623-micpalumbo/Project3/Reports/figs/fittedlines.png}

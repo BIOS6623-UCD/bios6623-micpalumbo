@@ -70,40 +70,9 @@ table(dat$demind)
 length(unique(dat$id)) # 216 subjects
 
 
-
-# investigators said to only include people who had 3 or more time points
-# some patients only have the outcome at some visits
-# so we may have different sized datasets for the different outcomes
-# "pulling criteria by outcome"
-# subset the dataset to only include outcome of interest and then find IDs for people with 3 or more
-# and use them to keep and include in dataset
-
-# the outcome variables are: blockR, animals, logmemI, logmemII
-# the following variables have NAs: SES (4), cdr(106), blockR (1851), animals(1893), logmemI(1827),
-# logmemII (1835)
-
-
 ## DATA CLEANING ##
 
-# creating datasets for each outcome variable
-# only including people with 3 or more outcome measurements (figure out how to do this)
-# make wide format data (1 row for each person) and only have outcome variable
-# identify subjects using ID who have 3 or more outcome measurements (using ncol)
-# use these ids to subset dataset and keep these subjects
-# maybe write a function?
-
-# testing
-table(dat$id, is.na(dat$blockR))
-# gives table where true is number of missing blockR and false is number of observed blockR measures
-table(dat$id, is.na(dat$blockR))[,1]
-# selects the false column (i.e. number of observed blockR responses for each sub)
-
-test <- table(dat$id, is.na(dat$blockR))[,1]
-test2 <- data.frame(ID = names(test), value = test) # creates data frame with 2 columns: ID and # obs
-less3id <- as.numeric(as.vector(test2[test2$value < 3, ]$ID)) # vector containing IDs for subj w/ < 3
-newdat
-
-
+# function to only keep subjects with 3 or more outcome measurements
 keep3ormore <- function(df, outcome){
   numobs <- table(df$id, is.na(outcome))[,1]
   numobsdf <- data.frame(ID = names(numobs), value = numobs)
@@ -111,39 +80,101 @@ keep3ormore <- function(df, outcome){
   newdf <- subset(df, !(df$id %in% less3id))
 }
 
-## CLEANING FINAL DATA SETS TO BE USED FOR ANALYSIS ##
+## CLEANING FINAL DATA SET TO BE USED FOR ANALYSIS ##
 
-# blockR
-# remove subj with < 3 obs
-dat.br <- keep3ormore(df = dat, outcome = dat$blockR)
+# remove subj with < 3 animals obs
+dat.final <- keep3ormore(df = dat, outcome = dat$animals)
+
+# how many subjects are remaining?
+length(unique(dat.final$id)) # 187
+
 # remove nas from remaining subjects who had enough observations
-dat.br.comp <- subset(dat.br, !(is.na(dat.br$blockR)))
-# put ageonset = 1000 instead of NA for people who did not get dementia
-dat.br.comp$ageonset <- ifelse(is.na(dat.br.comp$ageonset), 1000, dat.br.comp$ageonset)
+dat.final <- subset(dat.final, !(is.na(dat.final$animals)))
+# make sure we still have the same number of subjects
+length(unique(dat.final$id)) # yes 187 subjects, 1454 observations total
 
-# animals
-# remove subj with < 3 obs
-dat.an <- keep3ormore(df = dat, outcome = dat$animals)
-# remove nas from remaining subjects who had enough observations
-dat.an.comp <- subset(dat.an, !(is.na(dat.an$animals)))
-# put ageonset = 1000 instead of NA for people who did not get dementia
-dat.an.comp$ageonset <- ifelse(is.na(dat.an.comp$ageonset), 1000, dat.an.comp$ageonset)
+# remove outcome variables that won't be used
+dat.final <- subset(dat.final, select = -c(blockR, logmemI, logmemII, cdr))
 
-# logmemI
-# remove subj with < 3 obs
-dat.lm1 <- keep3ormore(df = dat, outcome = dat$logmemI)
-# remove nas from remaining subjects who had enough observations
-dat.lm1.comp <- subset(dat.lm1, !(is.na(dat.lm1$logmemI))) 
-# put ageonset = 1000 instead of NA for people who did not get dementia
-dat.lm1.comp$ageonset <- ifelse(is.na(dat.lm1.comp$ageonset), 1000, dat.lm1.comp$ageonset)
+## DESCRIPTIVE STATS FOR ANALYTIC DATASET ##
 
-# logmemII
-# remove subj with < 3 obs
-dat.lm2 <- keep3ormore(df = dat, outcome = dat$logmemII)
-# remove nas from remaining subjects who had enough observations
-dat.lm2.comp <- subset(dat.lm2, !(is.na(dat.lm2$logmemII)))
-# put ageonset = 1000 instead of NA for people who did not get dementia
-dat.lm2.comp$ageonset <- ifelse(is.na(dat.lm2.comp$ageonset), 1000, dat.lm2.comp$ageonset)
+## stats for Table 1
+## stratify by demind
 
-# remove extra datsets for space
-rm(list = c("dat.br", "dat.an", "dat.lm1", "dat.lm2"))
+## subset of data with just patients diagnosed ##
+dempats <- subset(dat.final, demind == "yes")
+summary(dempats)
+# 586 observations
+length(unique(dempats$id)) #68 patients
+# baseline SES
+mean(dempats$SES)
+sd(dempats$SES)
+# proportion of females
+dempats.fem <- subset(dempats, gender == "female")
+length(unique(dempats.fem$id))/length(unique(dempats$id))*100
+# average number of measurements
+nummeas.di <- aggregate(x = dempats$animals, by = list(factor(dempats$id)), FUN = length)
+mean(nummeas.di$x) 
+sd(nummeas.di$x)
+# average baseline age
+baseage.di <- aggregate(x = dempats$age, by = list(factor(dempats$id)), FUN = min)
+mean(baseage.di$x)
+sd(baseage.di$x)
+# average time followed
+tfollow.di <- aggregate(x = dempats$age, by = list(factor(dempats$id)), FUN = function(x){max(x) - min(x)})
+mean(tfollow.di$x)
+sd(tfollow.di$x)
+# average age onset
+mean(dempats$ageonset)
+sd(dempats$ageonset)
+# average baseline animals
+basean.di <- aggregate(x = dempats$animals, by = list(factor(dempats$id)), FUN = function(x){x[1]})
+mean(basean.di$x)
+sd(basean.di$x)
+# average animals at last visit
+lastan.di <- aggregate(x = dempats$animals, by = list(factor(dempats$id)), FUN = function(x){x[length(x)]})
+mean(lastan.di$x)
+sd(lastan.di$x)
+
+## subset of data with patients not diagnosed ##
+demno <- subset(dat.final, demind == "no")
+summary(demno)
+# 868 observations
+length(unique(demno$id)) #119 patients
+# baseline SES
+mean(demno$SES)
+sd(demno$SES)
+# proportion of females
+demno.fem <- subset(demno, gender == "female")
+length(unique(demno.fem$id))/length(unique(demno$id))*100
+# average number of measurements
+nummeas.no <- aggregate(x = demno$animals, by = list(factor(demno$id)), FUN = length)
+mean(nummeas.no$x) 
+sd(nummeas.no$x)
+# average baseline age
+baseage.no <- aggregate(x = demno$age, by = list(factor(demno$id)), FUN = min)
+mean(baseage.no$x)
+sd(baseage.no$x)
+# average time followed
+tfollow.no <- aggregate(x = demno$age, by = list(factor(demno$id)), FUN = function(x){max(x) - min(x)})
+mean(tfollow.no$x)
+sd(tfollow.no$x)
+# average baseline animals
+basean.no <- aggregate(x = demno$animals, by = list(factor(demno$id)), FUN = function(x){x[1]})
+mean(basean.no$x)
+sd(basean.no$x)
+# average animals at last visit
+lastan.no <- aggregate(x = demno$animals, by = list(factor(demno$id)), FUN = function(x){x[length(x)]})
+mean(lastan.no$x)
+sd(lastan.no$x)
+
+
+## FINAL CLEANING FOR MODEL RUNNING = RECODE NAS ##
+# put ageonset = 999 instead of NA for people who did not get dementia
+# this will be important for making function work for model
+# so that there is only a change point term for people with dementia diagnosis
+dat.final$ageonset <- ifelse(is.na(dat.final$ageonset), 999, dat.final$ageonset)
+
+
+
+

@@ -12,3 +12,13 @@ Compile list of questions for investigators:
   - Should cdr be categorized or left continuous?
   - Distribution of logmemII looks kinda weird - ask investigators for normal range, why there might      be lots of lower values/bimodal appearance?
   
+To-do going forward:
+- run model and interpret output
+- figure out the error estimates for the beta coefficients and 95% CI for the change point using bootstrapping methods similar to what Camille did
+- plot of predicted lines(like what I drew on paper)
+  - or plot just showing the change point and change in slope
+- make model output table with bootstrap standard errors and confidence intervals
+- presentation slides
+- cite Camille's code
+  
+  
