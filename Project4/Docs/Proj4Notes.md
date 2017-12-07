@@ -97,7 +97,9 @@ Questions I have for investigators:
 15. How to include covariates of inflammation markers? baseline values or was it collected at both years
 16. How to adjust for multiple comparisons/where are the multiple comparisons occurring?
 17. Modelling strategry and model selection approach?
+Model selection (backward selection w/AIC to potentially remove covariates that don't contribute)
 18. Is power analysis for linear regression change if have interaction or what covariates you're going to include/ how many covariates?
+19. Is there a primary cytokine/chemokine?
 
 11/29/17:
 They say the sample size they can recruit with their budget and want us to calculate power to either justify or say they need a bigger sample size. 
@@ -106,6 +108,122 @@ In our report we will have the analysis plan: the models we plan to run for each
 
 Then will have the power/sample size calculation & justification.
 Will have different power analysis for each outcome type (i.e. for each set of models)
+
+12/4/17: Interim Presentations & Investigator visits
+covariate = indicator of HC vs aMCI patient (How are we using healthy controls?)
+aim 1a - baseline markers = predictors
+aim 1b - 1 year change in markers = predictors
+Aim 2a - first look at how inflammatory markers affect amyloid depositon
+Aim 2b - then look at effect of interaction between inflammatory markers and amyloid on clinical progression variables (memory scores)
+
+Do partial F test for significance of the set of the inflammatory variables or t-test for single term of interest? (i.e. do we care about each of the markers individually or the set of inflammatory markers as a group)
+How correlated are these inflammatory markers?
+Multiple comparisons?
+
+CLASS DISCUSSION:
+Aim 1a
+outcomes: 1 year change in memory & 1 year change in cortical thickness
+PEV(s): baseline levels of inflammatory markers (there are 6)
+covariates: age, sex, baseline outcome value (must include), others?
+analysis method/base model: multiple linear regression
+questions: individual models for each marker or one model including all markers?
+what are we doing with HC vs aMCI? options: include all with indicator?
+what other covariates might we include?
+info for power/SS:
+- effect size for outcomes (what is a meaningful change)
+- corr of x to y
+- what minimum power are you interested in?
+- desired alpha?
+- dropout rate: 10%
+- is there a primary cytokine/chemokine to use
+- sd of outcome
+- sd of x's
+- relationship between confounders and PEVs?
+- when to apply multiple comparisons? do you account for this in power and ss?
+- do we do different power analyses for the 2 different types of outcomes (do we do a power analysis for each aim? i.e. aim 1a, 1b, 2a, 2b)
+
+
+Aim 1b
+outcomes: same as 1a
+PEV(s): 1 year change in the 6 inflammatory markers
+covariates: same as 1a
+analysis method/base model: same as 1a but with the new PEVs
+questions: same as for 1a
+info for power/SS:
+
+*Aim 2 has new doc of revised specific aims that clears up these goals*
+Aim 2a
+outcomes: change in memory
+PEV(s): amyloid deposition, inflammatory markers and their interaction
+covariates: same as aim 1
+analysis method/base model: multiple linear regression
+questions: interaction with all the cytokines? probably too big of model if have all 6 markers plus all their interactions with amyloid?
+aim 2 makes it seems like we have to do cytokines one at a time
+do we use baseline or change for this aim?
+info for power/SS:
+
+Aim 2b
+outcomes: change in cortical thickness
+PEV(s): same as 2a
+covariates: same as aim 1
+analysis method/base model: multiple linear regression
+questions: same as 2a
+info for power/SS:
+
+QUESTIONS/DISCUSSION WITH BREE (INVESTIGATOR):
+- put markers in individually first to see if relationships are holding up
+- then ultimately looking at if there is a combination that is more predictive
+- markers you are very interested: MCP-1 & Eotaxin-1 (in the same family of chemokines     
+  primarily interested in) MCP-1 first then Eotaxin
+      - TNF-alpha & IL-6 have been show in lots of neurodegenerative and other diseases in            prior literature
+      - ACT & beta-2-microglobulin are more novel/innovative markers to look at
+- aim 2: 
+  - only 1 amyloid time point (so use baseline in PEVs for this aim)
+  - once amyloid is positive (detected?) you don't see much change in that
+- CVLT was primary memory measure (power based off this measure)
+- other covariates besides age & sex: usually include cardiovascular measures (body mass, history of high cholesterol), medication use (i.e. taking anti-inflammatory drug), 
+    - but if not related to outcome variable/don't contribute then don't want to include in   
+      the final model
+- biggest predictor of AD & cognitive decline is age (this is a proxy for a bunch of other mechanisms going on)
+    - correlation of ~ 0.4 (hesitant to say specific # because it depends on measure, may be 
+      like 0.1/0.2 or may be 0.4/0.5)
+    - studies showing higher association for women (women living longer, differences in             hormones)
+aim 2 - over and above covariates is the interaction the strongest effect
+HC vs aMCI - put everyone in the model together initially then go back and look to see if group differences explain (do it this way because have the frame of mind that people who appear healthy now may have markers & underlying biological things showing already becasue believe these precede aMCI diagnosis)
+  - for power analysis putting everyone in the model together
+~ 80% power, alpha @ 0.05  (or should it be set at 0.01? it seems like that is what Nichole thinks we should do)
+- concerned with harsh multiple comparisons corrections (like bon ferroni)
+- meaningful change in cortical thickness (sizes of correlation that are meaningful? - something more than 0.2)
+- ok with doing markers individually in beginning and then thinking if there is an interesting way to group them
+- correlation between the markers with each other: range is between 0.1-0.6, for these markers they are all positive correlations
+
+Lecture 12/6/17:
+See new announcement sent out
+AIM 1: testing whether correlation is equal to 0
+Power calculation 1: calculate power for aim 1a using the sample size they mentioned (Gpower, test = bivariate normal correlation, n = 175, # covariates = 4 (minimum), alpha = 0.01, tails = two) 
+Result: power = 0.5343487
+
+Power calculation 2: Repeat above but solve for sample size by setting power to 80%
+Result: final sample size required = 287
+Don't forget to account for expected 10% loss to follow-up. 
+Need to recruit *X* subjects to get the correct final sample size. 
+
+AIM 2: testing whether correlations are equal to eachother
+Think of model by categorizing amyloid deposition into high and low and doing that interaction with marker for the purpose of power analysis
+
+Compute effect size and then provide different types of differences in correlation that we could detect with our power and sample size. (maybe include a plot) need to figure out how they calculate the effect size in this software and back calcualte to get correlations in each group
+
+Power calculation 1: test = correlations: two independent r's 
+Use the 287 (143 in each group) sample size and a 0.80 desired power to compute the effect size
+Effect size = 0.4084635
+
+
+We're ok with not accounting for covariates in power analysis because this is being conservative. If we add in covariates that are associated/correlated with outcome (which we know they will be) this will decrease our variation and increase our power
+Decreased alpha level to 0.01 to account for potential multiple testing without being overly conservative with something like a bon ferroni correction. 
+
+
+
+
 
 
 
